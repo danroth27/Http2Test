@@ -1,0 +1,22 @@
+﻿@page
+<html>
+<body onload='showtimes()'>
+    <h1>ASP.NET Core 2.2 (HTTP/2)</h1>
+    <p>
+        @for (int y = 0; y < 720 / 80; y++)
+        {
+            @for (int x = 0; x < 1280 / 80; x++)
+            {
+                var id = (16 * y + x + 1).ToString().PadLeft(3, '0');
+<img width="40" height="40" src='~/images/image_part_@(id).jpg'>}<br />}
+        <p><div id='loadtimes'></div></p>
+        <script>
+            function showtimes() {
+                var times = 'Times from connection start:<br>'
+                times += 'DOM loaded: ' + (window.performance.timing.domContentLoadedEventEnd - window.performance.timing.connectStart) + 'ms<br>'
+                times += 'DOM complete (images loaded): ' + (window.performance.timing.domComplete - window.performance.timing.connectStart) + 'ms<br>'
+                document.getElementById('loadtimes').innerHTML = times
+            }
+        </script>
+</body>
+</html>
