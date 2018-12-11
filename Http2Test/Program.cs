@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace Http2Test
 {
@@ -19,6 +20,15 @@ namespace Http2Test
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureKestrel(options =>
+                {
+                    options.ListenLocalhost(5001, listenOptions =>
+                    {
+                        listenOptions.Protocols = HttpProtocols.Http2;
+                        listenOptions.UseHttps();
+                    });
+                })
                 .UseStartup<Startup>();
+
     }
 }
